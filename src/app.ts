@@ -2,8 +2,9 @@ import express from "express";
 // import cors from "cors";
 // import morgan from "morgan";
 import dotenv from "dotenv";
-
 dotenv.config();
+
+import sequelize from "./db/config";
 
 const app = express();
 
@@ -23,6 +24,15 @@ app.get("/", (req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
+async function bootstrap() {
+
+  await sequelize.authenticate();
+  console.log("✅ Database connected");
+  
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+}
+
+bootstrap();
