@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import sequelize from "./db/sequelize";
+import registerAppRoutes from "./routes";
 
 const app = express();
 
@@ -13,9 +14,8 @@ const app = express();
 app.use(express.json());
 // app.use(morgan("dev"));
 
-// Routes
-// import userRoutes from "./routes/user.routes.js";
-// app.use("/api/users", userRoutes);
+// Setup api enpoints
+registerAppRoutes(app);
 
 // Health check
 app.get("/", (req, res) => {

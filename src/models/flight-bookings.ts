@@ -24,8 +24,8 @@ export class FlightBookings extends Model<
   declare birthday: Date;
 }
 
-FlightBookings.belongsTo(Flights, { foreignKey: "flightId" });
-FlightBookings.belongsTo(Users, { foreignKey: "userId" });
+// FlightBookings.belongsTo(Flights, { foreignKey: "flightId" });
+// FlightBookings.belongsTo(Users, { foreignKey: "userId" });
 
 FlightBookings.init(
   {

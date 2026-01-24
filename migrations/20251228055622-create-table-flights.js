@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    queryInterface.createTable("flights", {
+    await queryInterface.createTable("flights", {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,

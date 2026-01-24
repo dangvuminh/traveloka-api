@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    queryInterface.createTable("flight_bookings", {
+    await queryInterface.createTable("flight_bookings", {
       id: {
         primaryKey: true,
         type: Sequelize.UUID,
@@ -15,7 +15,7 @@ module.exports = {
       },
       userId: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.UUID,
         references: {
           model: "users",
           key: "id",

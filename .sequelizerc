@@ -2,6 +2,6 @@ const path = require("path");
 
 module.exports = {
   config: path.resolve("dist/db/cli-config.js"),
-  migrationsPath: path.resolve("dist/migrations"),
-  seedersPath: path.resolve("dist/seeders"),
+  migrationsPath: path.resolve("migrations"),
+  seedersPath: path.resolve("seeders"),
 };

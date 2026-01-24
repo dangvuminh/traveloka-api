@@ -20,7 +20,7 @@ export class Users extends Model<
   declare gender: 'MALE' | 'FEMALE' | 'NONE';
 }
 
-Users.hasMany(FlightBookings, { foreignKey: "userId" });
+// Users.hasMany(FlightBookings, { foreignKey: "userId" });
 
 Users.init(
   {

@@ -31,8 +31,8 @@ export class Flights extends Model<
   declare numOfFirst: number;
 }
 
-Flights.belongsTo(Airlines, { foreignKey: "airlineId" });
-Flights.hasMany(FlightBookings, { foreignKey: "flightId" });
+// Flights.belongsTo(Airlines, { foreignKey: "airlineId" });
+// Flights.hasMany(FlightBookings, { foreignKey: "flightId" });
 
 Flights.init(
   {

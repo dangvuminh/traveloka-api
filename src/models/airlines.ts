@@ -11,7 +11,7 @@ export class Airlines
   declare logo: CreationOptional<string>;  
 }
 
-Airlines.hasMany(Flights, {foreignKey: 'airlineId'})
+// Airlines.hasMany(Flights, {foreignKey: 'airlineId'})
 
 Airlines.init(
   {
