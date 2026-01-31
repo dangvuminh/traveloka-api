@@ -8,7 +8,6 @@ import {
 } from "sequelize";
 import sequelize from "../db/sequelize";
 import { Flights } from "./flights";
-import { Users } from "./users";
 
 export class FlightBookings extends Model<
   InferAttributes<FlightBookings>,
@@ -23,9 +22,6 @@ export class FlightBookings extends Model<
   declare passport: CreationOptional<string>;
   declare birthday: Date;
 }
-
-// FlightBookings.belongsTo(Flights, { foreignKey: "flightId" });
-// FlightBookings.belongsTo(Users, { foreignKey: "userId" });
 
 FlightBookings.init(
   {

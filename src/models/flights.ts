@@ -8,7 +8,6 @@ import {
 } from "sequelize";
 import sequelize from "../db/sequelize";
 import { Airlines } from "./airlines";
-import { FlightBookings } from "./flight-bookings";
 
 export class Flights extends Model<
   InferAttributes<Flights>,
@@ -30,9 +29,6 @@ export class Flights extends Model<
   declare numOfPre: number;
   declare numOfFirst: number;
 }
-
-// Flights.belongsTo(Airlines, { foreignKey: "airlineId" });
-// Flights.hasMany(FlightBookings, { foreignKey: "flightId" });
 
 Flights.init(
   {

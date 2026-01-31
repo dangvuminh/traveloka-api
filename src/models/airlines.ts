@@ -1,6 +1,5 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, Optional } from "sequelize";
 import sequelize from "../db/sequelize";
-import { Flights } from "./flights";
 
 export class Airlines
   extends Model<InferAttributes<Airlines>, InferCreationAttributes<Airlines>>
@@ -10,8 +9,6 @@ export class Airlines
   declare code: string;
   declare logo: CreationOptional<string>;  
 }
-
-// Airlines.hasMany(Flights, {foreignKey: 'airlineId'})
 
 Airlines.init(
   {

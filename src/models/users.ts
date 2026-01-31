@@ -6,7 +6,6 @@ import {
   Model,
 } from "sequelize";
 import sequelize from "../db/sequelize";
-import { FlightBookings } from "./flight-bookings";
 
 export class Users extends Model<
   InferAttributes<Users>,
@@ -19,8 +18,6 @@ export class Users extends Model<
   declare phone: string;
   declare gender: 'MALE' | 'FEMALE' | 'NONE';
 }
-
-// Users.hasMany(FlightBookings, { foreignKey: "userId" });
 
 Users.init(
   {

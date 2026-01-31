@@ -1,6 +1,6 @@
 type Gender = "MALE" | "FEMALE";
 
-type User = {
+type UserInput = {
   firstName: string;
   lastName: string;
   email: string;
@@ -8,4 +8,6 @@ type User = {
   gender: Gender;
 };
 
-export { Gender, User };
+type AirlineInput = { name: string; code: string; logo: string };
+
+export { Gender, UserInput, AirlineInput };
