@@ -2,6 +2,9 @@ import { Flights } from "./flights";
 import { FlightBookings } from "./flight-bookings";
 import { Users } from "./users";
 import { Airlines } from "./airlines";
+import { Cities } from "./cities";
+import { Countries } from "./countries";
+import { Airports } from "./airports";
 
 //---------------------------FlightBookings associations---------------------------
 FlightBookings.belongsTo(Flights, { foreignKey: "flightId" });
@@ -18,5 +21,16 @@ Flights.belongsTo(Airlines, { foreignKey: "airlineId" });
 Flights.hasMany(FlightBookings, { foreignKey: "flightId" });
 
 
+//---------------------------Airports associations----------------------------
+Airports.belongsTo(Countries, {foreignKey: 'countryId'});
+Airports.belongsTo(Cities, {foreignKey: 'cityId'});
 
-export { FlightBookings, Flights, Airlines, Users };
+export {
+  FlightBookings,
+  Flights,
+  Airlines,
+  Users,
+  Cities,
+  Countries,
+  Airports,
+};

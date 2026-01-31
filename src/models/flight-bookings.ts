@@ -19,7 +19,7 @@ export class FlightBookings extends Model<
   declare flightId: ForeignKey<Flights["id"]>;
   declare seatType: "ECO" | "PRE" | "BUS" | "FIRST";
   declare customerName: string;
-  declare passport: CreationOptional<string>;
+  declare passport: CreationOptional<string | null>;
   declare birthday: Date;
 }
 
