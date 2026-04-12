@@ -8,6 +8,8 @@ import {
 } from "sequelize";
 import sequelize from "../db/sequelize";
 import { Airlines, Airports } from "../models/index";
+// import { Airlines } from "./airlines";
+// import { Airports } from "./airports";
 
 export class Flights extends Model<
   InferAttributes<Flights>,
@@ -23,7 +25,7 @@ export class Flights extends Model<
     | "FRI"
     | "SAT"
     | "SUN";
-  declare flightTime: Date;
+  declare flightTime: string;
   declare numOfEco: number;
   declare numOfBus: number;
   declare numOfPre: number;
@@ -34,6 +36,7 @@ export class Flights extends Model<
   declare toTime: string;
   declare routeId: CreationOptional<ForeignKey<Flights["id"]> | null>;
   declare order: CreationOptional<number | null>;
+  declare flightCode: string;
 }
 
 Flights.init(
@@ -74,10 +77,18 @@ Flights.init(
     flyFrom: {
       type: DataTypes.UUID,
       allowNull: false,
+      references: {
+        model: "airports",
+        key: "id",
+      },
     },
     flyTo: {
       type: DataTypes.UUID,
       allowNull: false,
+      references: {
+        model: "airports",
+        key: "id",
+      },
     },
     fromTime: {
       type: DataTypes.TIME,
@@ -99,10 +110,15 @@ Flights.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    flightCode: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+      allowNull: false,
+    },
   },
   {
     sequelize,
-    tableName: "airlines",
+    tableName: "flights",
     timestamps: true,
   },
 );

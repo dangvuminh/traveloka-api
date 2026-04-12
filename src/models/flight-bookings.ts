@@ -8,19 +8,21 @@ import {
 } from "sequelize";
 import sequelize from "../db/sequelize";
 import { Flights } from "./flights";
+import { FlightByDate } from "./flight-by-date";
 
 export class FlightBookings extends Model<
   InferAttributes<FlightBookings>,
   InferCreationAttributes<FlightBookings>
 > {
   declare id: CreationOptional<string>;
-  declare bookingCode: string;
+  declare bookingCode: CreationOptional<string>;
   declare userId: string;
   declare flightId: ForeignKey<Flights["id"]>;
   declare seatType: "ECO" | "PRE" | "BUS" | "FIRST";
   declare customerName: string;
   declare passport: CreationOptional<string | null>;
-  declare birthday: Date;
+  declare birthday: CreationOptional<Date | null>;
+  declare flightByDateId: ForeignKey<FlightByDate["id"]>;
 }
 
 FlightBookings.init(
@@ -37,10 +39,26 @@ FlightBookings.init(
     userId: {
       allowNull: false,
       type: DataTypes.UUID,
+      references: {
+        model: "users",
+        key: "id",
+      },
     },
     flightId: {
       allowNull: false,
       type: DataTypes.UUID,
+      references: {
+        model: "flights",
+        key: "id",
+      },
+    },
+    flightByDateId: {
+      allowNull: false,
+      type: DataTypes.UUID,
+      references: {
+        model: "flight_by_date",
+        key: "id",
+      },
     },
     seatType: {
       allowNull: false,
@@ -55,7 +73,7 @@ FlightBookings.init(
       type: DataTypes.STRING,
     },
     birthday: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.DATE,
     },
   },
@@ -63,5 +81,5 @@ FlightBookings.init(
     sequelize,
     tableName: "flight_bookings",
     timestamps: true,
-  }
+  },
 );
