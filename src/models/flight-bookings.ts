@@ -23,6 +23,14 @@ export class FlightBookings extends Model<
   declare passport: CreationOptional<string | null>;
   declare birthday: CreationOptional<Date | null>;
   declare flightByDateId: ForeignKey<FlightByDate["id"]>;
+  declare status:
+    | "WAITING_PAYMENT"
+    | "WAITING_CONFIRMED"
+    | "ISSUED"
+    | "CANCELLED"
+    | "REFUNDING"
+    | "RESCHEDULED"
+    | "COMPLETE";
 }
 
 FlightBookings.init(
@@ -75,6 +83,18 @@ FlightBookings.init(
     birthday: {
       allowNull: true,
       type: DataTypes.DATE,
+    },
+    status: {
+      allowNull: false,
+      type: DataTypes.ENUM(
+        "WAITING_PAYMENT",
+        "WAITING_CONFIRMED",
+        "ISSUED",
+        "CANCELLED",
+        "REFUNDING",
+        "RESCHEDULED",
+        "COMPLETE",
+      ),
     },
   },
   {

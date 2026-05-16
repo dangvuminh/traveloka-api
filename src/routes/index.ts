@@ -15,4 +15,14 @@ export default function registerAppRoutes(app: Express) {
   app.use("/api/airports", airportsRoutes);
   app.use("/api/flights", flightsRoutes);
   app.use("/api/flight-bookings", flightBookingsRoutes);
+  app.use((err, req, res, next) => {
+  let status = 500;  
+  console.error(err);
+  if(err.message) {
+    status = 400;
+  }  
+  return res.status(status).json({
+    message: err.message || "Internal server error",
+  });
+});
 }

@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import e, { NextFunction, Request, Response } from "express";
 import { Airlines, Flights } from "../models/index";
 import { FlightInput } from "../types/flights.types";
 import sequelize from "../db/sequelize";
@@ -23,7 +23,7 @@ export const createFlight = async (
         numOfBus: para.numOfBus || 0,
         numOfPre: para.numOfPre || 0,
         numOfFirst: para.numOfFirst || 0,
-        flightCode: airline?.code + `${countFlight + 1}`,
+        code: airline?.code + `${countFlight + 1}`,
       };
       try {
         await Flights.create({ ...payload });
@@ -41,7 +41,13 @@ export const createFlight = async (
 export const getFlights = async (
   req: Request<{}, {}, FlightInput>,
   res: Response,
+  next: NextFunction
 ) => {
-  const flights = await Flights.findAll();
-  res.status(200).json(flights);
+  try {
+    const flights = await Flights.findAll();
+    res.status(200).json(flights);
+  } catch (error) {
+    // console.log(error);
+    next(error);
+  }
 };

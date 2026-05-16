@@ -19,6 +19,14 @@ export class FlightByDate extends Model<
   declare numOfBus: number;
   declare numOfPre: number;
   declare numOfFirst: number;
+  declare status:
+    | "WAITING"
+    | "CHECKIN"
+    | "BOARDING"
+    | "DELAYED"
+    | "RESCHEDULED"
+    | "CANCELLED"
+    | "COMPLETE";
 }
 
 FlightByDate.init(
@@ -55,7 +63,19 @@ FlightByDate.init(
     numOfFirst: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    }
+    },
+    status: {
+      type: DataTypes.ENUM(
+        "WAITING",
+        "CHECKIN",
+        "BOARDING",
+        "DELAYED",
+        "RESCHEDULED",
+        "CANCELLED",
+        "COMPLETE",
+      ),
+      allowNull: false,
+    },
   },
   {
     sequelize,

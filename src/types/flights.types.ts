@@ -14,7 +14,7 @@ type FlightInput = {
   toTime: string;
   routeId: string | null;
   order: number | null;
-  flightCode: string;
+  code: string;
 };
 
 export { FlightInput };

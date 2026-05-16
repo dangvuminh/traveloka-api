@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { FlightBookings, FlightByDate, Flights } from "../models/index";
 import randomstring from "randomstring";
 import sequelize from "../db/sequelize";
@@ -24,6 +24,7 @@ const NUM_MAP_TO_DAY: Record<number, string> = {
 export const createFlightBooking = async (
   req: Request<{}, {}, FlightBookingInput>,
   res: Response,
+  next: NextFunction,
 ) => {
   return await sequelize.transaction(async (t) => {
     try {
@@ -36,8 +37,17 @@ export const createFlightBooking = async (
         birthday,
         date,
       } = req.body;
-      
-      const flightDay = NUM_MAP_TO_DAY[new Date(date).getDay()];
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const flightDate = new Date(date);
+
+      if (new Date(date) < today) {
+        throw new Error("Date must be today or in the future");
+      }
+
+      const flightDay = NUM_MAP_TO_DAY[flightDate.getDay()];
 
       const flight = await Flights.findOne({
         where: {
@@ -45,6 +55,7 @@ export const createFlightBooking = async (
           flightSchedule: flightDay,
         },
       });
+      console.log(flightDay);
 
       if (!flight) {
         throw new Error("Flight not found");
@@ -54,7 +65,7 @@ export const createFlightBooking = async (
         throw new Error("No available seat");
       }
 
-      const flightByDate = await FlightByDate.findOne({
+      let flightByDate = await FlightByDate.findOne({
         where: {
           flightDate: date,
           flightId: flightId,
@@ -63,8 +74,9 @@ export const createFlightBooking = async (
         lock: true,
       });
 
+
       if (!flightByDate) {
-        await FlightByDate.create(
+        flightByDate = await FlightByDate.create(
           {
             flightId,
             flightDate: date,
@@ -76,6 +88,7 @@ export const createFlightBooking = async (
               flight.numOfFirst - (SEAT_TYPE_MAP[seatType] === "FIRST" ? 1 : 0),
             numOfPre:
               flight.numOfPre - (SEAT_TYPE_MAP[seatType] === "PRE" ? 1 : 0),
+            status: "WAITING",
           },
           {
             transaction: t,
@@ -105,13 +118,16 @@ export const createFlightBooking = async (
           customerName,
           flightId,
           birthday,
+          status: "WAITING_PAYMENT",
+          flightByDateId: flightByDate.id,
         },
         { transaction: t },
       );
 
       res.status(201).send("Flight is booked");
     } catch (error) {
-      res.send(403).json(error);
+      console.log(error);
+      next(error);
     }
   });
 };

@@ -36,7 +36,7 @@ export class Flights extends Model<
   declare toTime: string;
   declare routeId: CreationOptional<ForeignKey<Flights["id"]> | null>;
   declare order: CreationOptional<number | null>;
-  declare flightCode: string;
+  declare code: string;
 }
 
 Flights.init(
@@ -110,7 +110,7 @@ Flights.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    flightCode: {
+    code: {
       type: DataTypes.STRING,
       defaultValue: "",
       allowNull: false,
